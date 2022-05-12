@@ -17,6 +17,7 @@ Route::get('gestion/periodos', 'DigitalsiteSaaS\Progresiveapp\Http\Progresiveapp
 Route::get('nomina/proceso/{id}', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@procesos');
 Route::get('nomina/configuracion', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@configuracion');
 Route::post('/gestion/nomina/crear-periodo', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@crearperiodo');
+Route::post('/gestion/nomina/crear-periodofg', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@crearperiodo');
 });
 
 
