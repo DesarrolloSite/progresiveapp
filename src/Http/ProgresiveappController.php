@@ -17,6 +17,7 @@ use DigitalsiteSaaS\Pagina\Seo;
 use DigitalsiteSaaS\Progresiveapp\Empleado;
 use DigitalsiteSaaS\Progresiveapp\Nomina;
 use DigitalsiteSaaS\Progresiveapp\Informacion;
+use DigitalsiteSaaS\Progresiveapp\Banco;
 use DigitalsiteSaaS\Progresiveapp\Periodo;
 use DateTime;
 use DateInterval;
@@ -112,11 +113,11 @@ $fecha = Periodo::select('fecha')->orderBy('fecha', 'desc')->take(1)->get();
 
 
 if(!$this->tenantName){
-$empleados = Empleado::join('informacion','empleados.id','=','informacion.empleado_id')
- ->join('nominas','empleados.id','=', 'nominas.empleado_id')
+$empleados = Empleado::leftjoin('informacion','empleados.id','=','informacion.empleado_id')
+ ->leftjoin('nominas','empleados.id','=', 'nominas.empleado_id')
  ->select(DB::raw('max(nominas.periodo_nom) as complejo'),DB::raw('max(nominas.id) as identificador'),"empleados.id","empleados.created_at","empleados.nombre","empleados.cargo","informacion.inicio","informacion.fin","empleados.documento","informacion.sueldo","informacion.por_salud","informacion.por_pensiones","empleados.tipo_nomina","nominas.periodo_nom","informacion.peridiocidad","informacion.empleado_id","nominas.id")
 
- ->groupBy('nominas.empleado_id')
+ ->groupBy('empleados.documento')
 
   ->get();
 
@@ -152,7 +153,13 @@ public function empleadonuevo(){
   public function procesos($id){
   $nomina = Nomina::where('id','=',$id)->get();
 
-  return View('progresiveapp::proceso')->with('nomina', $nomina);;
+  return View('progresiveapp::proceso')->with('nomina', $nomina);
+ }
+
+ public function bancos(){
+  $bancos = Banco::all();
+
+  return View('progresiveapp::bancos')->with('bancos', $bancos);
  }
 
 
@@ -252,7 +259,39 @@ public function crearinformacion(){
    return Redirect('gestion/periodos')->with('status', 'ok_create');
  }
 
+ public function crearbanco(){
+  date_default_timezone_set('America/Bogota');
+   if(!$this->tenantName){
+   $bancos = new Banco;
+   }else{
+   $bancos = new \DigitalsiteSaaS\Calendario\Tenant\Banco;
+   }
+   $bancos->banco = Input::get('val-banco');
+   $bancos->identificador = Input::get('val-identificador');
+   $bancos->save();
+   return Redirect('nomina/bancos')->with('status', 'ok_create');
+ }
 
+
+ public function editarbanco(){
+  $id = Input::get('val-id');
+  if(!$this->tenantName){
+  $bancos = Banco::find($id);
+  }else{
+  $bancos = \DigitalsiteSaaS\Pagina\Tenant\Banco::find($id);
+  }
+  $bancos->banco = Input::get('val-banco');
+  $bancos->identificador = Input::get('val-identificador');
+  $bancos->save();
+   return Redirect('nomina/bancos')->with('status', 'ok_update');
+ }
+
+  public function eliminarbanco($id){
+        $bancos = Banco::find($id);
+        $bancos->delete();
+        
+        return Redirect('nomina/bancos')->with('status', 'ok_delete');
+    }
 
    
 

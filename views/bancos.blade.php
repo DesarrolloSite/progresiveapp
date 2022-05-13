@@ -3,6 +3,10 @@
 
  @section('ContenidoSite-01')
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+        integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7"
+        crossorigin="anonymous"></script>
 <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link href="/nomina/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/nomina/vendor/chartist/css/chartist.min.css">
@@ -15,7 +19,7 @@
 
 <div class="content-body">
 
-            <!-- row -->
+
       <div class="container-fluid">
 
 
@@ -114,9 +118,9 @@
                     <td>
                       <img src="images/users/11.png" alt="" width="43">
                     </td>
-                    <td><span class="text-nowrap">{{$bancos->id}}</span></td>
-                    <td>{{$bancos->banco}}</td>
-                    <td>{{$bancos->identificador}}</td>
+                    <td><span class="text-nowrap val-id">{{$bancos->id}}</span></td>
+                    <td class="val-banco">{{$bancos->banco}}</td>
+                    <td class="val-identificador">{{$bancos->identificador}}</td>
                     <td><span class="text-dark">{{$bancos->created_at}}</span></td>
                     <td>
                      <span class="text-dark">{{$bancos->updated_at}}</span>
@@ -133,8 +137,8 @@
                         </div>
                         <div class="dropdown-menu dropdown-menu-right">
                           <a class="dropdown-item" href="/gestion/ver-nominas/">Ver Nóminas</a>
-                          <a class="dropdown-item" href="#">Edit</a>
-                          <a class="dropdown-item" href="#">Delete</a>
+                          <a data-toggle="modal" data-target="#modal1"  data-id="1" class="dropdown-item">Edit</a>
+                          <a class="dropdown-item" href="/gestion/nomina/eliminar-banco/{{$bancos->id}}">Delete</a>
                         </div>
                       </div>
                     </td>                       
@@ -148,9 +152,67 @@
             </div>
         </div>
 
-   
+
+
+
+
+<div class="modal fade" id="modal1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Modal titlesss</h4>
+      </div>
+      <form action="/gestion/nomina/editar-banco" method="post">
+      <div class="modal-body">
+          <div class="form-group">
+           <label class="text-black" style="font-size: 16px;">Banco</label>
+           <input type="text" name="val-banco" class="form-control val-banco">
+           </div>
+           <div class="form-group">
+           <label class="text-black" style="font-size: 16px;">Identificador</label>
+           <input type="text" name="val-identificador" class="form-control val-identificador">
+           <input type="hidden" name="val-id" class="form-control val-id">
+           </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.modal').on('show.bs.modal', function (e) {
+            let $this = $(e.relatedTarget);
+
+            let parentTr = $this.closest('tr');
+            let myRatingLimit = parentTr.find('.val-banco').text();
+            let myWeightedScore = parentTr.find('.val-identificador').text();
+            let myWeightedScoreid = parentTr.find('.val-id').text();
+            let target = $('#' + e.target.id);
+
+            target.find('.val-banco').val(myRatingLimit);
+            target.find('.val-identificador').val(myWeightedScore);
+            target.find('.val-id').val(myWeightedScoreid);
+        });
+    })
+</script>
+
+
+
+
+
+
+@stop
 
   @section('footer')
+
 
 
 
@@ -174,5 +236,5 @@
   </script>
 
 @stop
-@stop
+
 

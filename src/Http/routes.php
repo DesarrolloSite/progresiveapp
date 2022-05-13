@@ -1,5 +1,5 @@
 <?php
-Route::group(['middleware' => ['auths','administrador']], function (){
+Route::group(['middleware' => ['nomina']], function (){
 Route::get('/gestion/progresiveapp', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@index');
 Route::post('/gestion/progresiveapp/update', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@update');
 Route::get('/gestion/progresiveapp/update', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@update');
@@ -16,8 +16,12 @@ Route::post('gestion/generar-nomina', 'DigitalsiteSaaS\Progresiveapp\Http\Progre
 Route::get('gestion/periodos', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@periodos');
 Route::get('nomina/proceso/{id}', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@procesos');
 Route::get('nomina/configuracion', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@configuracion');
+Route::get('nomina/bancos', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@bancos');
 Route::post('/gestion/nomina/crear-periodo', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@crearperiodo');
 Route::post('/gestion/nomina/crear-periodofg', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@crearperiodo');
+Route::post('/gestion/nomina/crear-banco', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@crearbanco');
+Route::post('/gestion/nomina/editar-banco', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@editarbanco');
+Route::get('/gestion/nomina/eliminar-banco/{id}', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@eliminarbanco');
 });
 
 

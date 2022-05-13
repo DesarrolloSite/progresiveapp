@@ -154,16 +154,16 @@
 
 
             
-                    @if($empleados->complejo == $fechas->fecha)
-          
+                      @if($empleados->complejo == $fechas->fecha)
+                
                      <a class="btn btn-warning text-nowrap btn-xs" href="/nomina/proceso/{{$empleados->identificador}}">En Proceso</a>
                       @else
-                      <button type="submit" class="btn btn-success text-nowrap btn-xs">Liquidar</button>
+                      <button type="submit" class="btn btn-success text-nowrap btn-xs">Liquidars</button>
                       @endif
     
                 
                      
-     
+
                 
                       
                     </form>
