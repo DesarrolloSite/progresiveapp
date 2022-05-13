@@ -44,7 +44,7 @@
 									<div class="media-body text-white text-right">
 										<h4 class="mb-1 text-white"><b>Fondo Salud</b></h4><br>
 										<a href="" class="text-white">Crear</a><br>
-										<a href="" class="text-white">Ver</a>
+										<a href="/nomina/salud" class="text-white">Ver</a>
 									</div>
 								</div>
 							</div>
@@ -60,7 +60,7 @@
 									<div class="media-body text-white text-right">
 										<h4 class="mb-1 text-white"><b>Fondo Pensiones</b></h4><br>
 										<a href="" class="text-white">Crear</a><br>
-										<a href="" class="text-white">Ver</a>
+										<a href="/nomina/pensiones" class="text-white">Ver</a>
 									</div>
 								</div>
 							</div>
@@ -77,7 +77,7 @@
 									<div class="media-body text-white text-right">
 										<h4 class="mb-1 text-white"><b>ARL</b></h4><br>
 										<a href="" class="text-white">Crear</a><br>
-										<a href="" class="text-white">Ver</a>
+										<a href="/nomina/arl" class="text-white">Ver</a>
 									</div>
 								</div>
 							</div>
@@ -93,7 +93,7 @@
 									<div class="media-body text-white text-right">
 										<h4 class="mb-1 text-white"><b>Fondo Cesantias</b></h4><br>
 										<a href="" class="text-white">Crear</a><br>
-										<a href="" class="text-white">Ver</a>
+										<a href="/nomina/cesantias" class="text-white">Ver</a>
 									</div>
 								</div>
 							</div>
@@ -109,7 +109,7 @@
 									<div class="media-body text-white text-right">
 										<h4 class="mb-1 text-white"><b>Caja Compensaciones<b></h4><br>
 										<a href="" class="text-white">Crear </a><br>
-										<a href="" class="text-white">Ver</a>
+										<a href="/nomina/compensaciones" class="text-white">Ver</a>
 									</div>
 								</div>
 							</div>

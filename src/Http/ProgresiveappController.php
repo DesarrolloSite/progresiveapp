@@ -19,6 +19,11 @@ use DigitalsiteSaaS\Progresiveapp\Nomina;
 use DigitalsiteSaaS\Progresiveapp\Informacion;
 use DigitalsiteSaaS\Progresiveapp\Banco;
 use DigitalsiteSaaS\Progresiveapp\Periodo;
+use DigitalsiteSaaS\Progresiveapp\Salud;
+use DigitalsiteSaaS\Progresiveapp\Pension;
+use DigitalsiteSaaS\Progresiveapp\Arl;
+use DigitalsiteSaaS\Progresiveapp\Cesantia;
+use DigitalsiteSaaS\Progresiveapp\Compensacion;
 use DateTime;
 use DateInterval;
 use DatePeriod;
@@ -104,6 +109,14 @@ if(!$this->tenantName){
   return View('progresiveapp::vernominas')->with('empleados', $empleados);
  }
 
+
+public function dashboard(){
+ $empleados = Empleado::count();
+ dd($empleados);
+  return View('progresiveapp::dashboard');
+ }
+
+
  public function empleados(){
 $from = date('2022-05-02');
 $to = date('2022-05-10');
@@ -131,8 +144,8 @@ $empleados = Empleado::leftjoin('informacion','empleados.id','=','informacion.em
 
 
 public function empleadonuevo(){
-  
-  return View('progresiveapp::nuevo-empleado');
+  $bancos = Banco::all();
+  return View('progresiveapp::nuevo-empleado')->with('bancos', $bancos);
  }
 
  public function loginnomina(){
@@ -141,8 +154,12 @@ public function empleadonuevo(){
  }
 
  public function infolaboral(){
-  
-  return View('progresiveapp::infolaboral');
+  $pensiones = Pension::all();
+  $salud = Salud::all();
+  $arl = Arl::all();
+  $cesantias = Cesantia::all();
+  $compensaciones = Compensacion::all();
+  return View('progresiveapp::infolaboral')->with('pensiones', $pensiones)->with('salud', $salud)->with('arl', $arl)->with('cesantias', $cesantias)->with('compensaciones', $compensaciones);
  }
 
   public function configuracion(){
@@ -156,11 +173,6 @@ public function empleadonuevo(){
   return View('progresiveapp::proceso')->with('nomina', $nomina);
  }
 
- public function bancos(){
-  $bancos = Banco::all();
-
-  return View('progresiveapp::bancos')->with('bancos', $bancos);
- }
 
 
  public function desprendible($id){
@@ -259,6 +271,12 @@ public function crearinformacion(){
    return Redirect('gestion/periodos')->with('status', 'ok_create');
  }
 
+ public function bancos(){
+  $bancos = Banco::all();
+
+  return View('progresiveapp::bancos')->with('bancos', $bancos);
+ }
+
  public function crearbanco(){
   date_default_timezone_set('America/Bogota');
    if(!$this->tenantName){
@@ -293,6 +311,210 @@ public function crearinformacion(){
         return Redirect('nomina/bancos')->with('status', 'ok_delete');
     }
 
-   
+   public function salud(){
+  $bancos = Salud::all();
+
+  return View('progresiveapp::salud')->with('bancos', $bancos);
+ }
+
+ public function crearsalud(){
+  date_default_timezone_set('America/Bogota');
+   if(!$this->tenantName){
+   $bancos = new Salud;
+   }else{
+   $bancos = new \DigitalsiteSaaS\Calendario\Tenant\Salud;
+   }
+   $bancos->salud = Input::get('val-salud');
+   $bancos->identificador = Input::get('val-identificador');
+   $bancos->save();
+   return Redirect('nomina/salud')->with('status', 'ok_create');
+ }
+
+
+ public function editarsalud(){
+  $id = Input::get('val-id');
+  if(!$this->tenantName){
+  $bancos = Salud::find($id);
+  }else{
+  $bancos = \DigitalsiteSaaS\Pagina\Tenant\Salud::find($id);
+  }
+  $bancos->salud = Input::get('val-salud');
+  $bancos->identificador = Input::get('val-identificador');
+  $bancos->save();
+   return Redirect('nomina/salud')->with('status', 'ok_update');
+ }
+
+  public function eliminarsalud($id){
+        $bancos = Salud::find($id);
+        $bancos->delete();
+        
+        return Redirect('nomina/salud')->with('status', 'ok_delete');
+    }
+
+
+    public function pensiones(){
+  $bancos = Pension::all();
+
+  return View('progresiveapp::pensiones')->with('bancos', $bancos);
+ }
+
+ public function crearpensiones(){
+  date_default_timezone_set('America/Bogota');
+   if(!$this->tenantName){
+   $bancos = new Pension;
+   }else{
+   $bancos = new \DigitalsiteSaaS\Calendario\Tenant\Pension;
+   }
+   $bancos->pension = Input::get('val-pension');
+   $bancos->identificador = Input::get('val-identificador');
+   $bancos->save();
+   return Redirect('nomina/pensiones')->with('status', 'ok_create');
+ }
+
+
+ public function editarpensiones(){
+  $id = Input::get('val-id');
+  if(!$this->tenantName){
+  $bancos = Pension::find($id);
+  }else{
+  $bancos = \DigitalsiteSaaS\Pagina\Tenant\Pension::find($id);
+  }
+  $bancos->pension = Input::get('val-pension');
+  $bancos->identificador = Input::get('val-identificador');
+  $bancos->save();
+   return Redirect('nomina/pensiones')->with('status', 'ok_update');
+ }
+
+  public function eliminarpensiones($id){
+        $bancos = Pension::find($id);
+        $bancos->delete();
+        
+        return Redirect('nomina/pensiones')->with('status', 'ok_delete');
+    }
+
+
+     public function arl(){
+  $bancos = Arl::all();
+
+  return View('progresiveapp::arl')->with('bancos', $bancos);
+ }
+
+ public function creararl(){
+  date_default_timezone_set('America/Bogota');
+   if(!$this->tenantName){
+   $bancos = new Arl;
+   }else{
+   $bancos = new \DigitalsiteSaaS\Calendario\Tenant\Arl;
+   }
+   $bancos->arl = Input::get('val-arl');
+   $bancos->identificador = Input::get('val-identificador');
+   $bancos->save();
+   return Redirect('nomina/arl')->with('status', 'ok_create');
+ }
+
+
+ public function editararl(){
+  $id = Input::get('val-id');
+  if(!$this->tenantName){
+  $bancos = Arl::find($id);
+  }else{
+  $bancos = \DigitalsiteSaaS\Pagina\Tenant\Arl::find($id);
+  }
+  $bancos->arl = Input::get('val-arl');
+  $bancos->identificador = Input::get('val-identificador');
+  $bancos->save();
+   return Redirect('nomina/arl')->with('status', 'ok_update');
+ }
+
+  public function eliminararl($id){
+        $bancos = Arl::find($id);
+        $bancos->delete();
+        
+        return Redirect('nomina/arl')->with('status', 'ok_delete');
+    }
+
+public function cesantias(){
+  $bancos = Cesantia::all();
+
+  return View('progresiveapp::cesantias')->with('bancos', $bancos);
+ }
+
+ public function crearcesantias(){
+  date_default_timezone_set('America/Bogota');
+   if(!$this->tenantName){
+   $bancos = new Cesantia;
+   }else{
+   $bancos = new \DigitalsiteSaaS\Calendario\Tenant\Cesantia;
+   }
+   $bancos->cesantias = Input::get('val-cesantias');
+   $bancos->identificador = Input::get('val-identificador');
+   $bancos->save();
+   return Redirect('nomina/cesantias')->with('status', 'ok_create');
+ }
+
+
+ public function editarcesantias(){
+  $id = Input::get('val-id');
+  if(!$this->tenantName){
+  $bancos = Cesantia::find($id);
+  }else{
+  $bancos = \DigitalsiteSaaS\Pagina\Tenant\Cesantia::find($id);
+  }
+  $bancos->cesantias = Input::get('val-cesantias');
+  $bancos->identificador = Input::get('val-identificador');
+  $bancos->save();
+   return Redirect('nomina/cesantias')->with('status', 'ok_update');
+ }
+
+  public function eliminarcesantias($id){
+        $bancos = Cesantia::find($id);
+        $bancos->delete();
+        
+        return Redirect('nomina/cesantias')->with('status', 'ok_delete');
+    }
+
+
+
+
+public function compensaciones(){
+  $bancos = Compensacion::all();
+
+  return View('progresiveapp::compensaciones')->with('bancos', $bancos);
+ }
+
+ public function crearcompensaciones(){
+  date_default_timezone_set('America/Bogota');
+   if(!$this->tenantName){
+   $bancos = new Compensacion;
+   }else{
+   $bancos = new \DigitalsiteSaaS\Calendario\Tenant\Compensacion;
+   }
+   $bancos->compensaciones = Input::get('val-compensaciones');
+   $bancos->identificador = Input::get('val-identificador');
+   $bancos->save();
+   return Redirect('nomina/compensaciones')->with('status', 'ok_create');
+ }
+
+
+ public function editarcompensaciones(){
+  $id = Input::get('val-id');
+  if(!$this->tenantName){
+  $bancos = Compensacion::find($id);
+  }else{
+  $bancos = \DigitalsiteSaaS\Pagina\Tenant\Compensacion::find($id);
+  }
+  $bancos->compensaciones = Input::get('val-compensaciones');
+  $bancos->identificador = Input::get('val-identificador');
+  $bancos->save();
+   return Redirect('nomina/compensaciones')->with('status', 'ok_update');
+ }
+
+  public function eliminarcompensaciones($id){
+        $bancos = Compensacion::find($id);
+        $bancos->delete();
+        
+        return Redirect('nomina/compensaciones')->with('status', 'ok_delete');
+    }
+
 
 }
