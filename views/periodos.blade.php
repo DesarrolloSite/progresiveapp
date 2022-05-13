@@ -36,17 +36,41 @@
                                                 <div class="form-group row">
                                                     
                                                     <div class="col-lg-6">
-                                                      <label class="col-lg-12 col-form-label" for="val-descripcion">Descripción periodo
+                                                      <label class="col-lg-12 col-form-label" for="val-tipocontrato">Periodo
                                                         <span class="text-danger">*</span>
                                                     </label>
-                                                        <input type="text" class="form-control" id="val-descripcion" name="val-descripcion" placeholder="Ingrese Descripción">
+                                                        <select class="form-control default-select" id="val-periodo" name="val-periodo">
+                                                            <option value="" disabled selected>Seleccione una opción</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                        </select>
                                                     </div>
-                                                     <div class="col-lg-6">
-                                                      <label class="col-lg-12 col-form-label" for="val-fecha">Fecha
+
+                                                    <div class="col-lg-6">
+                                                      <label class="col-lg-12 col-form-label" for="val-tipocontrato">Mes
                                                         <span class="text-danger">*</span>
                                                     </label>
-                                                        <input type="date" class="form-control" id="val-fecha" name="val-fecha" placeholder="Ingrese Fecha">
+                                                        <select class="form-control default-select" id="val-mes" name="val-mes">
+                                                            <option value="" disabled selected>Seleccione una opción</option>
+                                                            <option value="enero">Enero</option>
+                                                            <option value="febrero">Febrero</option>
+                                                            <option value="marzo">Marzo</option>
+                                                            <option value="abril">Abril</option>
+                                                            <option value="mayo">Mayo</option>
+                                                            <option value="junio">Junio</option>
+                                                            <option value="julio">Julio</option>
+                                                            <option value="agosto">Agosto</option>
+                                                            <option value="septiembre">Septiembre</option>
+                                                            <option value="octubre">Octubre</option>
+                                                            <option value="noviembre">Noviembre</option>
+                                                            <option value="diciembre">Diciembre</option>
+                                                        </select>
                                                     </div>
+                                                          <input type="text" value="2022" class="form-control" id="val-ano" name="val-ano" placeholder="Ingrese Fecha">
+
+                                                     
                                                 </div>
                                                 
                                                 </div>
