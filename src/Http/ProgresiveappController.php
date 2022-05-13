@@ -265,8 +265,10 @@ public function crearinformacion(){
    }else{
    $periodo = new \DigitalsiteSaaS\Calendario\Tenant\Periodo;
    }
-   $periodo->periodo = Input::get('val-descripcion');
-   $periodo->fecha = Input::get('val-fecha');
+   $periodo->periodo = Input::get('val-periodo');
+   $periodo->mes = Input::get('val-mes');
+   $periodo->ano = Input::get('val-ano'); 
+   $periodo->codigo = $periodo->periodo.'_'.$periodo->mes.'_'.$periodo->ano; 
    $periodo->save();
    return Redirect('gestion/periodos')->with('status', 'ok_create');
  }
