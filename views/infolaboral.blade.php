@@ -125,12 +125,9 @@
                                                     </label>
                                                         <select class="form-control default-select" id="val-salud" name="val-salud">
                                                             <option value="" selected disabled>Seleccione una opción</option>
-                                                            <option value="1">Compensar</option>
-                                                            <option value="2">Famisanar</option>
-                                                            <option value="2">Sanitas</option>
-                                                            <option value="2">Nueva EPS</option>
-                                                            <option value="2">Sura</option>
-                                                            <option value="2">Cruz Blanca</option>
+                                                            @foreach($salud as $salud)
+                                                            <option value="{{$salud->id}}">{{$salud->salud}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
 
@@ -152,11 +149,9 @@
                                                     </label>
                                                         <select class="form-control default-select" id="val-pensiones" name="val-pensiones">
                                                             <option value="" selected disabled>Seleccione una opción</option>
-                                                            <option value="1">Colfondos</option>
-                                                            <option value="2">Porvenir</option>
-                                                            <option value="3">Colpensiones</option>
-                                                            <option value="4">Protección</option>
-                                                            <option value="5">Escandia</option>
+                                                            @foreach($pensiones as $pensiones)
+                                                            <option value="{{$pensiones->id}}">{{$pensiones->pension}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
 
@@ -178,11 +173,9 @@
                                                     </label>
                                                         <select class="form-control default-select" id="val-arl" name="val-arl">
                                                             <option value="" selected disabled>Seleccione una opción</option>
-                                                            <option value="1">Positiva</option>
-                                                            <option value="2">Colmena</option>
-                                                            <option value="2">Mapfre</option>
-                                                            <option value="2">La Equidad</option>
-                                                            <option value="2">Seguros Bolivar</option>
+                                                            @foreach($arl as $arl)
+                                                            <option value="{{$arl->id}}">{{$arl->arl}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
 
@@ -208,11 +201,9 @@
                                                     </label>
                                                         <select class="form-control default-select" id="val-caja" name="val-caja">
                                                             <option value="" selected disabled>Seleccione una opción</option>
-                                                            <option value="4">Compensar</option>
-                                                            <option value="4">Colsubsidio</option>
-                                                            <option value="4">Cafam</option>
-                                                            <option value="4">Confandi</option>
-                                                            <option value="4">Comfama</option>
+                                                            @foreach($compensaciones as $compensaciones)
+                                                            <option value="{{$compensaciones->id}}">{{$compensaciones->compensaciones}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
 
@@ -223,9 +214,9 @@
                                                     </label>
                                                         <select class="form-control default-select" id="val-cesantias" name="val-cesantias">
                                                             <option value="" selected disabled>Seleccione una opción</option>
-                                                            <option value="2">2%</option>
-                                                            <option value="4">4%</option>
-                                                            <option value="6">6%</option>
+                                                            @foreach($cesantias as $cesantias)
+                                                            <option value="{{$cesantias->id}}">{{$cesantias->cesantias}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>  
                                                 </div>
@@ -245,7 +236,7 @@
 
 
     
-         <input id="color" name="color" type="text"></input>
+        
                                     </form>
                                 </div>
                             </div>

@@ -126,12 +126,9 @@
                                                     </label>
                                                         <select class="form-control default-select" id="val-banco" name="val-banco">
                                                             <option value="" selected disabled>Seleccione una opción</option>
-                                                            <option value="1">Bancolombia</option>
-                                                            <option value="2">Davivienda</option>
-                                                            <option value="3">Caja Social</option>
-                                                            <option value="4">Banco Falabella</option>
-                                                            <option value="5">Colpatria</option>
-                                                            <option value="6">Banco Bogotá</option>
+                                                            @foreach($bancos as $bancos)
+                                                            <option value="{{$bancos->id}}">{{$bancos->banco}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
 
