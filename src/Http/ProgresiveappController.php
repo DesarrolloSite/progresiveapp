@@ -86,7 +86,7 @@ class ProgresiveappController extends Controller
  public function nomina(){
 if(!$this->tenantName){
   $empleados = Empleado::leftjoin('informacion','empleados.id','=','informacion.empleado_id')
-  ->select("empleados.id","empleados.created_at","empleados.nombre","empleados.cargo","informacion.inicio","informacion.fin","empleados.documento")->get();
+  ->select("empleados.id","empleados.created_at","empleados.nombre","empleados.cargo","informacion.inicio","informacion.fin","empleados.documento","informacion.empleado_id")->get();
 
  }else{
    $empleados = \DigitalsiteSaaS\Progresiveapp\Tenant\Empleado::leftjoin('informacion','empleados.id','=','informacion.empleado_id')->get();
@@ -122,7 +122,7 @@ $from = date('2022-05-02');
 $to = date('2022-05-10');
 
 $dato = Informacion::whereBetween('inicio', [$from, $to])->count();
-$fecha = Periodo::select('fecha')->orderBy('fecha', 'desc')->take(1)->get();
+$fecha = Periodo::select('codigo')->orderBy('codigo', 'desc')->take(1)->get();
 
 
 if(!$this->tenantName){
@@ -204,12 +204,40 @@ public function crearempleado(){
    $empleado->direccion = Input:: get ('val-direccion');
    $empleado->ciudad = Input:: get ('val-ciudad');
    $empleado->tipago = Input:: get ('valtipo');
-   $empleado->banco = Input:: get ('val-banco');
+   $empleado->banco_id = Input:: get ('val-banco');
    $empleado->tipocuenta = Input:: get ('val-tipcuenta');
    $empleado->numerocu = Input:: get ('val-cuenta');
    $empleado->save();
    return Redirect('gestion/empleados')->with('status', 'ok_create');
  }
+
+public function editarempleado($id){
+  $empleados = Empleado::leftjoin('bancos','bancos.id','=','empleados.banco_id')->where('empleados.id','=',$id)->get();
+  $datos = Empleado::leftjoin('bancos','bancos.id','=','empleados.banco_id')->where('empleados.id','=',$id)->get();
+
+  $bancos = Banco::all();
+  return View('progresiveapp::editarempleado')->with('empleados', $empleados)->with('bancos', $bancos);
+ }
+
+ public function editarinformacion($id){
+  $informacion = Informacion::leftjoin('entidades_pension','entidades_pension.id','=','informacion.pensiones_id')
+  ->leftjoin('entidades_arl','entidades_arl.id','=','informacion.arl_id')
+  ->leftjoin('entidades_cesantias','entidades_cesantias.id','=','informacion.cesantias_id')
+  ->leftjoin('entidades_compensaciones','entidades_compensaciones.id','=','informacion.caja_id')
+  ->leftjoin('entidades_salud','entidades_salud.id','=','informacion.salud_id')
+  ->select('informacion.tipo_contrato','informacion.sueldo','informacion.inicio','informacion.fin','informacion.tipo_sueldo','informacion.tipo_cotizante','entidades_salud.salud','informacion.por_salud','entidades_pension.pension','informacion.por_pensiones','entidades_arl.arl','informacion.por_arl','entidades_compensaciones.compensaciones','entidades_cesantias.cesantias','informacion.id','informacion.salud_id','informacion.pensiones_id','informacion.empleado_id','informacion.arl_id','informacion.caja_id','informacion.cesantias_id')
+  ->where('informacion.empleado_id','=',$id)->get();
+
+  $pensiones = Pension::all();
+  $salud = Salud::all();
+  $arl = Arl::all();
+  $cesantias = Cesantia::all();
+  $compensaciones = Compensacion::all();
+  $bancos = Banco::all();
+  return View('progresiveapp::editarinformacion')->with('informacion', $informacion)->with('bancos', $bancos)->with('pensiones', $pensiones)->with('salud', $salud)->with('arl', $arl)->with('cesantias', $cesantias)->with('compensaciones', $compensaciones);
+ }
+
+
 
 
 
@@ -227,18 +255,74 @@ public function crearinformacion(){
    $empleado->fin = Input::get('val-fin');
    $empleado->tipo_sueldo = Input:: get ('val-tiposueldo');
    $empleado->tipo_cotizante = Input:: get ('val-tipocot');
-   $empleado->salud = Input:: get ('val-salud');
+   $empleado->salud_id = Input:: get ('val-salud');
    $empleado->por_salud = Input:: get ('val-porcentajesalud');
-   $empleado->pensiones = Input:: get ('val-pensiones');
+   $empleado->pensiones_id = Input:: get ('val-pensiones');
    $empleado->por_pensiones = Input:: get ('val-porcentajepensiones');
-   $empleado->arl = Input:: get ('val-arl');
+   $empleado->arl_id = Input:: get ('val-arl');
    $empleado->por_arl = Input:: get ('val-porcentajearl');
-   $empleado->caja = Input:: get ('val-caja');
-   $empleado->cesantias = Input:: get ('val-cesantias');
+   $empleado->caja_id = Input:: get ('val-caja');
+   $empleado->cesantias_id = Input:: get ('val-cesantias');
    $empleado->empleado_id = Input:: get ('empleado-id');
    $empleado->save();
    return Redirect('gestion/empleados')->with('status', 'ok_create');
  }
+
+
+
+
+
+ public function updateempleado($id){
+  $input = Input::all();
+  if(!$this->tenantName){
+   $empleado = Empleado::find($id);
+   }else{
+   $empleado = \DigitalsiteSaaS\Pagina\Tenant\Empleado::find($id);
+   }
+   $empleado->nombre = Input::get('val-nombre');
+   $empleado->apellido = Input::get('val-apellido');
+   $empleado->correo = Input::get('val-email');
+   $empleado->telefono = Input::get('val-telefono');
+   $empleado->tipodoc = Input::get('val-tipo');
+   $empleado->documento = Input::get('val-numero');
+   $empleado->direccion = Input::get('val-direccion');
+   $empleado->ciudad = Input::get('val-ciudad');
+   $empleado->tipago = Input::get('valtipo');
+   $empleado->banco_id = Input::get('val-banco');
+   $empleado->tipocuenta = Input::get('val-tipcuenta');
+   $empleado->numerocu = Input::get('val-cuenta');
+   $empleado->save();
+   return Redirect('gestion/empleados')->with('status', 'ok_update');
+ }
+
+
+ public function updateinformacion($id){
+  $input = Input::all();
+  if(!$this->tenantName){
+   $empleado = Informacion::find($id);
+   }else{
+   $empleado = \DigitalsiteSaaS\Pagina\Tenant\Informacion::find($id);
+   }
+   $empleado->tipo_contrato = Input::get('val-tipocontrato');
+   $empleado->sueldo = Input::get('val-sueldo');
+   $empleado->inicio = Input::get('val-inicio');
+   $empleado->fin = Input::get('val-fin');
+   $empleado->tipo_sueldo = Input:: get ('val-tiposueldo');
+   $empleado->tipo_cotizante = Input:: get ('val-tipocot');
+   $empleado->salud_id = Input:: get ('val-salud');
+   $empleado->por_salud = Input:: get ('val-porcentajesalud');
+   $empleado->pensiones_id = Input:: get ('val-pensiones');
+   $empleado->por_pensiones = Input:: get ('val-porcentajepensiones');
+   $empleado->arl_id = Input::get('val-arl');
+   $empleado->por_arl = Input::get('val-porcentajearl');
+   $empleado->caja_id = Input::get('val-caja');
+   $empleado->cesantias_id = Input::get('val-cesantias');
+   $empleado->empleado_id = Input::get('empleado-id');
+   $empleado->save();
+   return Redirect('gestion/empleados')->with('status', 'ok_update');
+ }
+
+
 
 
  public function generarnomina(){

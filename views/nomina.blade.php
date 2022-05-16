@@ -148,8 +148,8 @@
                           </svg>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="#">View Detail</a>
-                          <a class="dropdown-item" href="#">Edit</a>
+                          <a class="dropdown-item" href="/gestion/nomina/editar-informacion/{{$empleados->empleado_id}}">Editar Información</a>
+                          <a class="dropdown-item" href="/gestion/nomina/editar-empleado/{{$empleados->id}}">Editar Empleado</a>
                           <a class="dropdown-item" href="#">Delete</a>
                         </div>
                       </div>
