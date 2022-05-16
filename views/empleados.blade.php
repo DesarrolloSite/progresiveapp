@@ -145,7 +145,7 @@
                      <input type="text" value="{{$empleados->sueldo*$empleados->peridiocidad/30*$empleados->por_pensiones/100}}" name="val-pension" id="val-pension">
                      <input type="text" value="{{$empleados->empleado_id}}" class="form-control" name="val-empleado" id="val-empleado">
                      @if($empleados->sueldo <= '2000000')
-                     <input type="text" value="117172" class="form-control" name="val-auxilio" id="val-auxilio">
+                     <input type="text" value="{{117172*$empleados->peridiocidad/30}}" class="form-control" name="val-auxilio" id="val-auxilio">
                      @else
                      <input type="text" value="0" class="form-control" name="val-auxilio" id="val-auxilio">
                      @endif
@@ -180,8 +180,8 @@
                           </svg>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="/gestion/ver-nominas/{{$empleados->id}}">Ver Nóminas</a>
-                          <a class="dropdown-item" href="#">Edit</a>
+                          <a class="dropdown-item" href="/gestion/ver-nominas/{{$empleados->empleados_id}}">Editar Información</a>
+                          <a class="dropdown-item" href="/gestion/nomina/editar-empleado/{{$empleados->id}}">Editar Empleado</a>
                           <a class="dropdown-item" href="#">Delete</a>
                         </div>
                       </div>

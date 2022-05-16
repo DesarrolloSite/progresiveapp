@@ -10,7 +10,11 @@ Route::get('gestion/dashboard', 'DigitalsiteSaaS\Progresiveapp\Http\Progresiveap
 Route::get('gestion/nuevo-empleado', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@empleadonuevo');
 Route::get('gestion/informacion-laboral/{id}', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@infolaboral');
 Route::post('gestion/nomina/crear-empleado', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@crearempleado');
+Route::get('gestion/nomina/editar-empleado/{id}', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@editarempleado');
+Route::get('gestion/nomina/editar-informacion/{id}', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@editarinformacion');
+Route::post('/gestion/nomina/updateempleado/{id}', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@updateempleado');
 Route::post('gestion/nomina/crear-informacion', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@crearinformacion');
+Route::post('gestion/nomina/editar-informacion/{id}', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@updateinformacion');
 Route::get('gestion/nomina/desprendible/{id}', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@desprendible');
 Route::get('gestion/ver-nominas/{id}', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@vernominas');
 Route::post('gestion/generar-nomina', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@generarnomina');
