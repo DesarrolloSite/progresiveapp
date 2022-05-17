@@ -29,7 +29,10 @@
                         <div class="card">
                            
                             <div class="card-body">
-                                
+                                @foreach($nomina as $nominas)
+                                Nombre: {{$nominas->nombre}} {{$nominas->apellido}} <br>
+                                Documento:  {{$nominas->documento}} 
+                                @endforeach
                                 <div class="table-responsive">
                                     <table class="table table-striped table-responsive-md">
                                         <thead>

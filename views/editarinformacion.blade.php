@@ -94,7 +94,7 @@
 
                                                      <div class="form-group row">
                                                     
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-6">
                                                       <label class="col-lg-12 col-form-label" for="val-tipocot">Tipo Cotizante
                                                         <span class="text-danger">*</span>
                                                     </label>
@@ -106,7 +106,18 @@
                                         
                                                     </div>
                                                     
-                                                    
+                                                    <div class="col-lg-6">
+                                                      <label class="col-lg-12 col-form-label" for="val-tipocot">Tipo Nómina
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                        
+                                                          {{ Form::select('peridiocidad',  [$informacion->peridiocidad => $informacion->peridiocidad,
+                                                      '8' => 'Semanal',
+                                                      '15' => 'Quincenal',
+                                                      '30' => 'Mensual'
+                                                      ], null, array('class' => 'form-control'),['class' => 'form-control default-select']) }}
+                                        
+                                                    </div>
 
                                                     <div class="col-lg-6">
                                                       <label class="col-lg-12 col-form-label" for="val-salud">Fondo Salud
