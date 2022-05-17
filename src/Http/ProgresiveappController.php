@@ -24,6 +24,7 @@ use DigitalsiteSaaS\Progresiveapp\Pension;
 use DigitalsiteSaaS\Progresiveapp\Arl;
 use DigitalsiteSaaS\Progresiveapp\Cesantia;
 use DigitalsiteSaaS\Progresiveapp\Compensacion;
+use DigitalsiteSaaS\Progresiveapp\Novedad;
 use DateTime;
 use DateInterval;
 use DatePeriod;
@@ -167,9 +168,13 @@ public function empleadonuevo(){
 
   public function procesos($id){
 
-  $nomina = Nomina::leftjoin('empleados','empleados.id','=','nominas.empleado_id')->where('nominas.id','=',$id)->get();
-
-  return View('progresiveapp::proceso')->with('nomina', $nomina);
+ $nomina = Nomina::leftjoin('empleados','empleados.id','=','nominas.empleado_id')
+ 
+ ->where('nominas.id','=',$id)->get();
+ $novedad = Nomina::leftjoin('novedades','novedades.proceso_id','=','nominas.id')
+ ->where('nominas.id','=',$id)->get();
+ $fecha = Periodo::select('codigo')->orderBy('codigo', 'desc')->take(1)->get();
+  return View('progresiveapp::proceso')->with('nomina', $nomina)->with('fecha', $fecha)->with('novedad', $novedad);
  }
 
 
@@ -374,6 +379,26 @@ public function crearinformacion(){
    $bancos->banco = Input::get('val-banco');
    $bancos->identificador = Input::get('val-identificador');
    $bancos->save();
+   return Redirect('nomina/bancos')->with('status', 'ok_create');
+ }
+
+
+ public function novedad(){
+  date_default_timezone_set('America/Bogota');
+   if(!$this->tenantName){
+   $novedades = new Novedad;
+   }else{
+   $novedades = new \DigitalsiteSaaS\Calendario\Tenant\Novedad;
+   }
+   $novedades->codigo = Input::get('codigo');
+   $novedades->descripcion = Input::get('descripcion');
+   $novedades->periodo = Input::get('periodo');
+   $novedades->empleados_id = Input::get('empleado');
+   $novedades->tiempo = Input::get('tiempo');
+   $novedades->tipo = Input::get('tipo');
+   $novedades->valor = Input::get('valor');
+   $novedades->proceso_id = Input::get('proceso-id');
+   $novedades->save();
    return Redirect('nomina/bancos')->with('status', 'ok_create');
  }
 
