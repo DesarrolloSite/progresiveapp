@@ -166,7 +166,8 @@ public function empleadonuevo(){
  }
 
   public function procesos($id){
-  $nomina = Nomina::where('id','=',$id)->get();
+
+  $nomina = Nomina::leftjoin('empleados','empleados.id','=','nominas.empleado_id')->where('nominas.id','=',$id)->get();
 
   return View('progresiveapp::proceso')->with('nomina', $nomina);
  }
@@ -223,7 +224,7 @@ public function editarempleado($id){
   ->leftjoin('entidades_cesantias','entidades_cesantias.id','=','informacion.cesantias_id')
   ->leftjoin('entidades_compensaciones','entidades_compensaciones.id','=','informacion.caja_id')
   ->leftjoin('entidades_salud','entidades_salud.id','=','informacion.salud_id')
-  ->select('informacion.tipo_contrato','informacion.sueldo','informacion.inicio','informacion.fin','informacion.tipo_sueldo','informacion.tipo_cotizante','entidades_salud.salud','informacion.por_salud','entidades_pension.pension','informacion.por_pensiones','entidades_arl.arl','informacion.por_arl','entidades_compensaciones.compensaciones','entidades_cesantias.cesantias','informacion.id','informacion.salud_id','informacion.pensiones_id','informacion.empleado_id','informacion.arl_id','informacion.caja_id','informacion.cesantias_id')
+  ->select('informacion.tipo_contrato','informacion.sueldo','informacion.inicio','informacion.fin','informacion.tipo_sueldo','informacion.tipo_cotizante','entidades_salud.salud','informacion.por_salud','entidades_pension.pension','informacion.por_pensiones','entidades_arl.arl','informacion.por_arl','entidades_compensaciones.compensaciones','entidades_cesantias.cesantias','informacion.id','informacion.salud_id','informacion.pensiones_id','informacion.empleado_id','informacion.arl_id','informacion.caja_id','informacion.cesantias_id','informacion.peridiocidad')
   ->where('informacion.empleado_id','=',$id)->get();
 
   $pensiones = Pension::all();
@@ -262,6 +263,7 @@ public function crearinformacion(){
    $empleado->caja_id = Input:: get ('val-caja');
    $empleado->cesantias_id = Input:: get ('val-cesantias');
    $empleado->empleado_id = Input:: get ('empleado-id');
+   $empleado->peridiocidad = Input:: get ('peridiocidad');
    $empleado->save();
    return Redirect('gestion/empleados')->with('status', 'ok_create');
  }
@@ -316,6 +318,7 @@ public function crearinformacion(){
    $empleado->caja_id = Input::get('val-caja');
    $empleado->cesantias_id = Input::get('val-cesantias');
    $empleado->empleado_id = Input::get('empleado-id');
+   $empleado->peridiocidad = Input:: get ('peridiocidad');
    $empleado->save();
    return Redirect('gestion/empleados')->with('status', 'ok_update');
  }

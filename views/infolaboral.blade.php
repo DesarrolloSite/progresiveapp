@@ -105,17 +105,15 @@
                                                     </div>
                                                     
                                                     <div class="col-lg-6" id="val-bancose">
-                                                      <label class="col-lg-12 col-form-label" for="val-banco">Banco
+                                                      <label class="col-lg-12 col-form-label" for="val-banco">Tipo Nómina
                                                         <span class="text-danger">*</span>
                                                     </label>
-                                                        <select class="form-control default-select" id="val-banco" name="val-banco">
+                                                        <select class="form-control default-select" id="periodicidad" name="periodicidad">
                                                             <option value="" selected disabled>Seleccione una opción</option>
-                                                            <option value="1">Bancolombia</option>
-                                                            <option value="2">Davivienda</option>
-                                                            <option value="3">Caja Social</option>
-                                                            <option value="4">Banco Falabella</option>
-                                                            <option value="5">Colpatria</option>
-                                                            <option value="6">Banco Bogotá</option>
+                                                            <option value="8">Semanal</option>
+                                                            <option value="15">Quincenal</option>
+                                                            <option value="30">Mensual</option>
+                                                            
                                                         </select>
                                                     </div>
 
