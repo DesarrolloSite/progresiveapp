@@ -38,6 +38,7 @@ Route::get('/gestion/nomina/eliminar-pensiones/{id}', 'DigitalsiteSaaS\Progresiv
 Route::get('nomina/arl', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@arl');
 Route::post('/gestion/nomina/crear-arl', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@creararl');
 Route::post('/gestion/nomina/editar-arl', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@editararl');
+Route::post('/gestion/nomina/novedad', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@novedad');
 Route::get('/gestion/nomina/eliminar-arl/{id}', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@eliminararl');
 Route::get('nomina/cesantias', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@cesantias');
 Route::post('/gestion/nomina/crear-cesantias', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@crearcesantias');

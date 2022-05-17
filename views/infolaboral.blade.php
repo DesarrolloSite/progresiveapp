@@ -10,7 +10,7 @@
 @stop
 <div class="content-body">
   
-    
+
    
             <div class="container">
                 <div class="page-titles">
@@ -108,7 +108,7 @@
                                                       <label class="col-lg-12 col-form-label" for="val-banco">Tipo Nómina
                                                         <span class="text-danger">*</span>
                                                     </label>
-                                                        <select class="form-control default-select" id="periodicidad" name="periodicidad">
+                                                        <select class="form-control default-select" id="peridiocidad" name="peridiocidad">
                                                             <option value="" selected disabled>Seleccione una opción</option>
                                                             <option value="8">Semanal</option>
                                                             <option value="15">Quincenal</option>
