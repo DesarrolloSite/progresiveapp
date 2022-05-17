@@ -140,21 +140,21 @@
                     <td>
                     <form action="/gestion/generar-nomina" method="post">
 
-                     <input type="text" value="{{$empleados->sueldo*$empleados->peridiocidad/30}}" class="form-control" name="val-sueldo" id="val-sueldo">
-                     <input type="text" value="{{$empleados->sueldo*$empleados->peridiocidad/30*$empleados->por_salud/100}}" class="form-control" name="val-salud" id="val-salud">
-                     <input type="text" value="{{$empleados->sueldo*$empleados->peridiocidad/30*$empleados->por_pensiones/100}}" name="val-pension" id="val-pension">
-                     <input type="text" value="{{$empleados->empleado_id}}" class="form-control" name="val-empleado" id="val-empleado">
+                     <input type="hidden" value="{{$empleados->sueldo*$empleados->peridiocidad/30}}" class="form-control" name="val-sueldo" id="val-sueldo">
+                     <input type="hidden" value="{{$empleados->sueldo*$empleados->peridiocidad/30*$empleados->por_salud/100}}" class="form-control" name="val-salud" id="val-salud">
+                     <input type="hidden" value="{{$empleados->sueldo*$empleados->peridiocidad/30*$empleados->por_pensiones/100}}" name="val-pension" id="val-pension">
+                     <input type="hidden" value="{{$empleados->empleado_id}}" class="form-control" name="val-empleado" id="val-empleado">
                      @if($empleados->sueldo <= '2000000')
-                     <input type="text" value="{{117172*$empleados->peridiocidad/30}}" class="form-control" name="val-auxilio" id="val-auxilio">
+                     <input type="hidden" value="{{117172*$empleados->peridiocidad/30}}" class="form-control" name="val-auxilio" id="val-auxilio">
                      @else
-                     <input type="text" value="0" class="form-control" name="val-auxilio" id="val-auxilio">
+                     <input type="hidden" value="0" class="form-control" name="val-auxilio" id="val-auxilio">
                      @endif
-                       <input type="text" value="{{$fechas->fecha}}" class="form-control" name="val-periodo" id="val-periodo">
+                       <input type="hidden" value="{{$fechas->codigo}}" class="form-control" name="val-periodo" id="val-periodo">
             
 
 
             
-                      @if($empleados->complejo == $fechas->fecha)
+                      @if($empleados->complejo == $fechas->codigo)
                 
                      <a class="btn btn-warning text-nowrap btn-xs" href="/nomina/proceso/{{$empleados->identificador}}">En Proceso</a>
                       @else

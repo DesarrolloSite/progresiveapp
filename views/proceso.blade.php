@@ -45,31 +45,31 @@
                                             <tr>
                                                 <td class="center" style="border: 1px solid #cbcbcb">3</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">Sueldo Base</td>
-                                                <td class="text-right" style="border: 1px solid #cbcbcb">{{$nomina->sueldo_base}}</td>
+                                                <td class="text-right" style="border: 1px solid #cbcbcb">$ {{ number_format($nomina->sueldo_base,0,",",".")}}</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">-</td>
                                             </tr>
                                             <tr>
                                                 <td class="center" style="border: 1px solid #cbcbcb">3</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">Aporte Pensión</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">-</td>
-                                                <td class="text-right" style="border: 1px solid #cbcbcb">{{$nomina->pension}}</td>
+                                                <td class="text-right" style="border: 1px solid #cbcbcb">$ {{ number_format($nomina->pension,0,",",".")}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="center" style="border: 1px solid #cbcbcb">3</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">Aporte Salud</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">-</td>
-                                                <td class="text-right" style="border: 1px solid #cbcbcb">{{$nomina->salud}}</td>
+                                                <td class="text-right" style="border: 1px solid #cbcbcb">$ {{ number_format($nomina->salud,0,",",".")}}</td>
                                             </tr>
                                             @if($nomina->auxilio_transporte == 0)
                                             @else
                                             <tr>
                                                 <td class="center" style="border: 1px solid #cbcbcb">3</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">Auxilio Transporte</td>
+                                                <td class="text-right" style="border: 1px solid #cbcbcb">$ {{number_format($nomina->auxilio_transporte,0,",",".")}}</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">-</td>
-                                                <td class="text-right" style="border: 1px solid #cbcbcb">{{$nomina->auxilio_transporte}}</td>
                                             </tr>
                                             @endif
-                                            @endforeach
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -79,23 +79,22 @@
                                         <table class="table table-clear">
                                             <tbody>
                                                 <tr>
-                                                    <td class="left" style="border: 1px solid #cbcbcb"><strong>Subtotal</strong></td>
-                                                    <td class="right" style="border: 1px solid #cbcbcb">$8.497,00</td>
+                                                    <td class="left" style="border: 1px solid #cbcbcb"><strong>Ingresos Totales</strong></td>
+                                                    <td class="right" style="border: 1px solid #cbcbcb">$ {{ number_format($nomina->sueldo_base+$nomina->auxilio_transporte,0,",",".")}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="left" style="border: 1px solid #cbcbcb"><strong>Discount (20%)</strong></td>
-                                                    <td class="right" style="border: 1px solid #cbcbcb">$1,699,40</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="left" style="border: 1px solid #cbcbcb"><strong>VAT (10%)</strong></td>
-                                                    <td class="right" style="border: 1px solid #cbcbcb">$679,76</td>
+                                                    <td class="left" style="border: 1px solid #cbcbcb"><strong>Descuentos Totales</strong></td>
+                                                    <td class="right" style="border: 1px solid #cbcbcb">$ {{ number_format($nomina->pension+$nomina->pension,0,",",".")}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="left" style="border: 1px solid #cbcbcb"><strong>Total</strong></td>
-                                                    <td class="right" style="border: 1px solid #cbcbcb"><strong>$7.477,36</strong>
+                                                    <td class="right" style="border: 1px solid #cbcbcb"><strong>$ 
+                                                    {{ number_format($nomina->sueldo_base+$nomina->auxilio_transporte-$nomina->pension-$nomina->pension,0,",",".")}}
+                                                    </strong>
                                                         </td>
                                                 </tr>
                                             </tbody>
+                                            @endforeach
                                         </table>
                                     </div>
                                 </div>

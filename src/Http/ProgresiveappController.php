@@ -124,7 +124,6 @@ $to = date('2022-05-10');
 $dato = Informacion::whereBetween('inicio', [$from, $to])->count();
 $fecha = Periodo::select('codigo')->orderBy('codigo', 'desc')->take(1)->get();
 
-
 if(!$this->tenantName){
 $empleados = Empleado::leftjoin('informacion','empleados.id','=','informacion.empleado_id')
  ->leftjoin('nominas','empleados.id','=', 'nominas.empleado_id')
@@ -133,7 +132,6 @@ $empleados = Empleado::leftjoin('informacion','empleados.id','=','informacion.em
  ->groupBy('empleados.documento')
 
   ->get();
-
 
  }else{
    $empleados = \DigitalsiteSaaS\Progresiveapp\Tenant\Empleado::leftjoin('informacion','empleados.id','=','informacion.empleado_id')->get();
