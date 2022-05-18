@@ -1,5 +1,9 @@
 <?php
 Route::group(['middleware' => ['nomina']], function (){
+
+Route::get('nomina/novedades', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@novedades');
+
+
 Route::get('/gestion/progresiveapp', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@index');
 Route::post('/gestion/progresiveapp/update', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@update');
 Route::get('/gestion/progresiveapp/update', 'DigitalsiteSaaS\Progresiveapp\Http\ProgresiveappController@update');

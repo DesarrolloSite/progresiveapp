@@ -169,10 +169,22 @@ public function empleadonuevo(){
   public function procesos($id){
 
  $nomina = Nomina::leftjoin('empleados','empleados.id','=','nominas.empleado_id')
- 
  ->where('nominas.id','=',$id)->get();
- $novedad = Nomina::leftjoin('novedades','novedades.proceso_id','=','nominas.id')
+ $novedadw = Nomina::leftjoin('novedades','novedades.proceso_id','=','nominas.id')
  ->where('nominas.id','=',$id)->get();
+
+$novedadosas = Novedad::select(DB::raw('count(*) as novedades, tiempo'))
+->groupBy('empleados_id')
+ ->groupBy('proceso_id')
+ ->get();
+
+ $novedad = Empleado::leftjoin('novedades','novedades.empleados_id','=','empleados.id')
+ ->select(DB::raw('count(*) as novedades, tiempo, descripcion,valor,codigo'))
+ ->groupBy('empleados_id','novedades.proceso_id')
+ ->where('nominas_id','=',$id)
+ ->get();
+
+
  $fecha = Periodo::select('codigo')->orderBy('codigo', 'desc')->take(1)->get();
   return View('progresiveapp::proceso')->with('nomina', $nomina)->with('fecha', $fecha)->with('novedad', $novedad);
  }
@@ -186,9 +198,14 @@ public function empleadonuevo(){
  }
 
  public function periodos(){
-  
-
   return View('progresiveapp::periodos');
+ }
+
+ public function novedades(){
+  $datos = Empleado::leftjoin('novedades','empleados.id','=','novedades.empleados_id')->orderby('empleados.nombre', 'asc')->get();
+  $empleados = Empleado::all();
+  return View('progresiveapp::novedades')->with('empleados', $empleados)->with('datos', $datos);
+ 
  }
 
 
@@ -397,9 +414,10 @@ public function crearinformacion(){
    $novedades->tiempo = Input::get('tiempo');
    $novedades->tipo = Input::get('tipo');
    $novedades->valor = Input::get('valor');
+   $novedades->valor_dif = $novedades->valor/$novedades->tiempo;
    $novedades->proceso_id = Input::get('proceso-id');
    $novedades->save();
-   return Redirect('nomina/bancos')->with('status', 'ok_create');
+   return Redirect('nomina/novedades')->with('status', 'ok_create');
  }
 
 

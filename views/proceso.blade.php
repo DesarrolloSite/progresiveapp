@@ -75,12 +75,15 @@
                                             </tr>
                                             @endif
                                             @foreach($novedad as $novedades)
+                                            @if($novedades->novedades == $novedades->tiempo)
+                                            @else
                                             <tr>
                                                 <td class="center" style="border: 1px solid #cbcbcb">{{$novedades->codigo}}</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">{{$novedades->descripcion}}</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">-</td>
-                                                <td class="text-right" style="border: 1px solid #cbcbcb">$ {{$novedades->valor}}</td>
+                                                <td class="text-right" style="border: 1px solid #cbcbcb">$ {{number_format($novedades->valor,0,",",".")}}</td>
                                             </tr>
+                                            @endif
                                             @endforeach
                                         </tbody>
                                     </table>
