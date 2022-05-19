@@ -128,9 +128,10 @@ $fecha = Periodo::select('codigo')->orderBy('codigo', 'desc')->take(1)->get();
 if(!$this->tenantName){
 $empleados = Empleado::leftjoin('informacion','empleados.id','=','informacion.empleado_id')
  ->leftjoin('nominas','empleados.id','=', 'nominas.empleado_id')
- ->select(DB::raw('max(nominas.periodo_nom) as complejo'),DB::raw('max(nominas.id) as identificador'),"empleados.id","empleados.created_at","empleados.nombre","empleados.cargo","informacion.inicio","informacion.fin","empleados.documento","informacion.sueldo","informacion.por_salud","informacion.por_pensiones","empleados.tipo_nomina","nominas.periodo_nom","informacion.peridiocidad","informacion.empleado_id","nominas.id")
+ ->leftjoin('novedades','empleados.id','=', 'novedades.empleados_id')
+ ->select(DB::raw('max(nominas.periodo_nom) as complejo,SUM(valor) as valor'),DB::raw('max(nominas.id) as identificador'),"empleados.id","empleados.created_at","empleados.nombre","empleados.cargo","informacion.inicio","informacion.fin","empleados.documento","informacion.sueldo","informacion.por_salud","informacion.por_pensiones","empleados.tipo_nomina","nominas.periodo_nom","informacion.peridiocidad","informacion.empleado_id","nominas.id")
 
- ->groupBy('empleados.documento')
+ ->groupBy('novedades.empleados_id')
 
   ->get();
 
@@ -181,9 +182,8 @@ $novedadosas = Novedad::select(DB::raw('count(*) as novedades, tiempo'))
  $novedad = Empleado::leftjoin('novedades','novedades.empleados_id','=','empleados.id')
  ->select(DB::raw('count(*) as novedades, tiempo, descripcion,valor,codigo'))
  ->groupBy('empleados_id','novedades.proceso_id')
- ->where('nominas_id','=',$id)
  ->get();
-
+dd($novedad);
 
  $fecha = Periodo::select('codigo')->orderBy('codigo', 'desc')->take(1)->get();
   return View('progresiveapp::proceso')->with('nomina', $nomina)->with('fecha', $fecha)->with('novedad', $novedad);
