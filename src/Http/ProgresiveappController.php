@@ -25,6 +25,7 @@ use DigitalsiteSaaS\Progresiveapp\Arl;
 use DigitalsiteSaaS\Progresiveapp\Cesantia;
 use DigitalsiteSaaS\Progresiveapp\Compensacion;
 use DigitalsiteSaaS\Progresiveapp\Novedad;
+use DigitalsiteSaaS\Progresiveapp\Insertin;
 use DateTime;
 use DateInterval;
 use DatePeriod;
@@ -127,19 +128,26 @@ $fecha = Periodo::select('codigo')->orderBy('codigo', 'desc')->take(1)->get();
 
 if(!$this->tenantName){
 $empleados = Empleado::leftjoin('informacion','empleados.id','=','informacion.empleado_id')
- ->leftjoin('nominas','empleados.id','=', 'nominas.empleado_id')
  ->leftjoin('novedades','empleados.id','=', 'novedades.empleados_id')
- ->select(DB::raw('max(nominas.periodo_nom) as complejo,SUM(valor) as valor'),DB::raw('max(nominas.id) as identificador'),"empleados.id","empleados.created_at","empleados.nombre","empleados.cargo","informacion.inicio","informacion.fin","empleados.documento","informacion.sueldo","informacion.por_salud","informacion.por_pensiones","empleados.tipo_nomina","nominas.periodo_nom","informacion.peridiocidad","informacion.empleado_id","nominas.id")
+  ->leftjoin('nominas','empleados.id','=', 'nominas.empleado_id')
+ ->select(DB::raw('SUM(valor_dif) as valordif,count(*) noves,max(nominas.periodo_nom) as complejo,max(nominas.id) as identificador'),"empleados.id","empleados.created_at","empleados.nombre","empleados.cargo","informacion.inicio","informacion.fin","empleados.documento","informacion.sueldo","informacion.por_salud","informacion.por_pensiones","empleados.tipo_nomina","informacion.peridiocidad","informacion.empleado_id","proceso_id","tiempo")
 
  ->groupBy('novedades.empleados_id')
+ ->get();
 
-  ->get();
+
+
+ $novedad = Novedad::leftjoin('empleados','empleados.id','=','novedades.empleados_id')
+ ->select(DB::raw('SUM(valor) as valors,tiempo, descripcion,valor,codigo,empleados_id,nombre,novedades.id'))
+ ->groupBy('novedades.empleados_id')
+ ->groupBy('novedades.id')
+ ->get();
 
  }else{
    $empleados = \DigitalsiteSaaS\Progresiveapp\Tenant\Empleado::leftjoin('informacion','empleados.id','=','informacion.empleado_id')->get();
  }
 
-  return View('progresiveapp::empleados')->with('empleados', $empleados)->with('fecha', $fecha);
+  return View('progresiveapp::empleados')->with('empleados', $empleados)->with('fecha', $fecha)->with('novedad', $novedad);
  }
 
 
@@ -180,10 +188,9 @@ $novedadosas = Novedad::select(DB::raw('count(*) as novedades, tiempo'))
  ->get();
 
  $novedad = Empleado::leftjoin('novedades','novedades.empleados_id','=','empleados.id')
- ->select(DB::raw('count(*) as novedades, tiempo, descripcion,valor,codigo'))
+ ->select(DB::raw('count(*) as novedades, tiempo, descripcion,valor,codigo,nombre,empleados.id,novedades.empleados_id'))
  ->groupBy('empleados_id','novedades.proceso_id')
  ->get();
-dd($novedad);
 
  $fecha = Periodo::select('codigo')->orderBy('codigo', 'desc')->take(1)->get();
   return View('progresiveapp::proceso')->with('nomina', $nomina)->with('fecha', $fecha)->with('novedad', $novedad);
@@ -348,8 +355,12 @@ public function crearinformacion(){
 
 
 
- public function generarnomina(){
-  date_default_timezone_set('America/Bogota');
+ public function generarnomina(Request $request){
+
+  
+
+
+ date_default_timezone_set('America/Bogota');
    if(!$this->tenantName){
    $nomina = new Nomina;
    }else{
@@ -361,8 +372,25 @@ public function crearinformacion(){
    $nomina->pension = Input::get('val-pension');
    $nomina->empleado_id = Input::get('val-empleado');
    $nomina->auxilio_transporte = Input::get('val-auxilio');
+   $nomina->descuentos = Input::get('val-valor');
    $nomina->save();
-   return Redirect('gestion/empleados')->with('status', 'ok_create');
+
+     for ($i = 0; $i < count($request->novedad); $i++) {
+        $answers[] = [
+            
+            'novedad_id' => $request->novedad[$i],
+            'empleado_id' => $request->empleado[$i],
+            'periodo' => $request->periodo[$i]
+           
+        ];
+    }
+
+    Insertin::insert($answers);
+  
+
+ 
+   return Redirect('gestion/nomina')->with('status', 'ok_create');
+  
  }
 
  public function crearperiodo(){

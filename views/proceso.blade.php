@@ -75,8 +75,8 @@
                                             </tr>
                                             @endif
                                             @foreach($novedad as $novedades)
-                                            @if($novedades->novedades == $novedades->tiempo)
-                                            @else
+                                            @if($novedades->id == $novedades->empleados_id)
+
                                             <tr>
                                                 <td class="center" style="border: 1px solid #cbcbcb">{{$novedades->codigo}}</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">{{$novedades->descripcion}}</td>

@@ -144,6 +144,19 @@
                      <input type="text" value="{{$empleados->sueldo*$empleados->peridiocidad/30*$empleados->por_salud/100}}" class="form-control" name="val-salud" id="val-salud">
                      <input type="text" value="{{$empleados->sueldo*$empleados->peridiocidad/30*$empleados->por_pensiones/100}}" name="val-pension" id="val-pension">
                      <input type="text" value="{{$empleados->empleado_id}}" class="form-control" name="val-empleado" id="val-empleado">
+                     <input type="text" value="{{$empleados->valordif}}" class="form-control" name="val-valor" id="val-valor">
+
+                     @foreach($novedad as $novedads)
+
+                     @if($empleados->id == $novedads->empleados_id)
+                     <div style="background: red;">
+                     <input type="text" value="{{$fechas->codigo}}" class="form-control" name="periodo[]" id="val-periodo">
+                     <input type="text" value="{{$novedads->id}}" class="form-control" name="novedad[]" id="val-valor">
+                     <input type="text" value="{{$novedads->empleados_id}}" class="form-control" name="empleado[]" id="val-valor">
+                     </div>
+                     @else
+                     @endif
+                     @endforeach
                      @if($empleados->sueldo <= '2000000')
                      <input type="text" value="{{117172*$empleados->peridiocidad/30}}" class="form-control" name="val-auxilio" id="val-auxilio">
                      @else
