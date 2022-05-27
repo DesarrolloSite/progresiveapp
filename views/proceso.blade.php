@@ -28,7 +28,7 @@
                     <div class="col-lg-12">
 
                         <div class="card">
-                           <a href="javascript:void(0)" class="btn btn-primary mr-3" data-toggle="modal" data-target="#addOrderModal">+Nuevo Empleado</a>
+                          
             
                             <div class="card-body">
                                 @foreach($nomina as $nominas)
@@ -75,14 +75,24 @@
                                             </tr>
                                             @endif
                                             @foreach($novedad as $novedades)
-                                            @if($novedades->novedades == $novedades->tiempo)
+                                  
+                                            @if($novedades->conteo <= $novedades->tiempo)
+                                            @if($novedades->valor_dif == '')
+                                             <tr>
+                                                <td class="center" style="border: 1px solid #cbcbcb">{{$novedades->codigo}}</td>
+                                                <td class="text-right" style="border: 1px solid #cbcbcb">{{$novedades->descripcion}}</td>
+                                                <td class="text-right" style="border: 1px solid #cbcbcb">$ {{number_format($novedades->valor_fid,0,",",".")}}</td>
+                                                <td class="text-right" style="border: 1px solid #cbcbcb"></td>
+                                            </tr>
                                             @else
                                             <tr>
                                                 <td class="center" style="border: 1px solid #cbcbcb">{{$novedades->codigo}}</td>
                                                 <td class="text-right" style="border: 1px solid #cbcbcb">{{$novedades->descripcion}}</td>
-                                                <td class="text-right" style="border: 1px solid #cbcbcb">-</td>
-                                                <td class="text-right" style="border: 1px solid #cbcbcb">$ {{number_format($novedades->valor,0,",",".")}}</td>
+                                                <td class="text-right" style="border: 1px solid #cbcbcb"></td>
+                                                <td class="text-right" style="border: 1px solid #cbcbcb">$ {{number_format($novedades->valor_dif,0,",",".")}}</td>
                                             </tr>
+                                            @endif
+                                            @else
                                             @endif
                                             @endforeach
                                         </tbody>
@@ -95,16 +105,16 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="left" style="border: 1px solid #cbcbcb"><strong>Ingresos Totales</strong></td>
-                                                    <td class="right" style="border: 1px solid #cbcbcb">$ {{ number_format($nominaw->sueldo_base+$nominaw->auxilio_transporte,0,",",".")}}</td>
+                                                    <td class="right" style="border: 1px solid #cbcbcb">$ {{ number_format($nominaw->sueldo_base+$nominaw->total_ingresos,0,",",".")}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="left" style="border: 1px solid #cbcbcb"><strong>Descuentos Totales</strong></td>
-                                                    <td class="right" style="border: 1px solid #cbcbcb">$ {{ number_format($nominaw->pension+$nominaw->pension,0,",",".")}}</td>
+                                                    <td class="right" style="border: 1px solid #cbcbcb">$ {{ number_format($nominaw->total_descuentos,0,",",".")}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="left" style="border: 1px solid #cbcbcb"><strong>Total</strong></td>
                                                     <td class="right" style="border: 1px solid #cbcbcb"><strong>$ 
-                                                    {{ number_format($nominaw->sueldo_base+$nominaw->auxilio_transporte-$nominaw->pension-$nominaw->pension,0,",",".")}}
+                                                    {{ number_format($nominaw->sueldo_base+$nominaw->total_ingresos-$nominaw->total_descuentos,0,",",".")}}
                                                     </strong>
                                                         </td>
                                                 </tr>
